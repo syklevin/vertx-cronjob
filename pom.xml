@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>io.vertx</groupId>
+    <artifactId>vertx-ext-parent</artifactId>
+    <version>12</version>
+  </parent>
+
+  <groupId>com.glt</groupId>
+  <artifactId>vertx-cronjob</artifactId>
+  <version>1.0.0-SNAPSHOT</version>
+
+  <packaging>pom</packaging>
+
+  <modules>
+    <module>service</module>
+    <module>admin</module>
+  </modules>
+
+  <properties>
+    <stack.version>3.0.0-SNAPSHOT</stack.version>
+  </properties>
+
+  <distributionManagement>
+    <repository>
+      <id>acs.releases.nexus</id>
+      <name>ACS Internal Repository</name>
+      <url>http://repo.acsdev.net/content/repositories/releases</url>
+    </repository>
+    <snapshotRepository>
+      <id>acs.snapshots.nexus</id>
+      <name>ACS Internal Repository</name>
+      <url>http://repo.acsdev.net/content/repositories/snapshots</url>
+    </snapshotRepository>
+  </distributionManagement>
+
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>io.vertx</groupId>
+        <artifactId>vertx-dependencies</artifactId>
+        <version>${stack.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+
+  <build>
+    <plugins>
+      <!-- Work around because the vertx-ext-parent does not support well aggregators -->
+      <plugin>
+        <artifactId>maven-antrun-plugin</artifactId>
+        <version>1.8</version>
+        <executions>
+          <execution>
+            <configuration>
+              <target>
+                <mkdir dir="${project.basedir}/src/main/asciidoc"/>
+                <mkdir dir="${project.basedir}/src/main/resources"/>
+              </target>
+            </configuration>
+            <goals>
+              <goal>run</goal>
+            </goals>
+            <phase>generate-sources</phase>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+
+</project>
