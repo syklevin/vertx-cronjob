@@ -92,7 +92,7 @@ var JobRegistrationCenter = function(j_val) {
 JobRegistrationCenter.create = function(vertx, address) {
   var __args = arguments;
   if (__args.length === 2 && typeof __args[0] === 'object' && __args[0]._jdel && typeof __args[1] === 'string') {
-    return new JobRegistrationCenter(JJobRegistrationCenter["create(io.vertx.core.Vertx,java.lang.String)"](vertx._jdel, address));
+    return utils.convReturnVertxGen(JJobRegistrationCenter["create(io.vertx.core.Vertx,java.lang.String)"](vertx._jdel, address), JobRegistrationCenter);
   } else utils.invalidArgs();
 };
 

@@ -1,31 +1,30 @@
 package com.glt.cronjob.impl;
 
-import com.google.inject.Inject;
 import io.vertx.core.Future;
 import io.vertx.core.Vertx;
-import io.vertx.core.eventbus.EventBus;
 import io.vertx.core.eventbus.ReplyException;
 import io.vertx.core.eventbus.ReplyFailure;
 import io.vertx.core.json.JsonObject;
 import io.vertx.core.logging.Logger;
-import io.vertx.core.logging.impl.LoggerFactory;
+import io.vertx.core.logging.LoggerFactory;
 import org.quartz.Job;
-import org.quartz.JobDataMap;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 
 import java.util.concurrent.CountDownLatch;
 
-
 /**
- * Created by levin on 5/22/2015.
+ * Created by levin on 6/16/2015.
  */
-public class JobImpl implements Job {
+public class VertxJob implements Job {
 
-    private static final Logger log = LoggerFactory.getLogger(JobImpl.class);
+    private static final Logger log = LoggerFactory.getLogger(VertxJob.class);
 
-    @Inject
-    Vertx vertx;
+    private final Vertx vertx;
+
+    public VertxJob(Vertx vertx){
+        this.vertx = vertx;
+    }
 
     @Override
     public void execute(JobExecutionContext context) throws JobExecutionException {

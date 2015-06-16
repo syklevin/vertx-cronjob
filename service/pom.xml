@@ -7,7 +7,7 @@
   <parent>
     <groupId>com.glt</groupId>
     <artifactId>vertx-cronjob</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>1.0.1-SNAPSHOT</version>
   </parent>
 
   <artifactId>service</artifactId>
@@ -29,22 +29,18 @@
   </dependencyManagement>
 
   <dependencies>
-
     <dependency>
       <groupId>io.vertx</groupId>
       <artifactId>vertx-core</artifactId>
-      <version>3.0.0-SNAPSHOT</version>
     </dependency>
 
     <dependency>
       <groupId>io.vertx</groupId>
       <artifactId>vertx-service-proxy</artifactId>
-      <version>3.0.0-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>io.vertx</groupId>
       <artifactId>vertx-service-factory</artifactId>
-      <version>3.0.0-SNAPSHOT</version>
     </dependency>
 
     <dependency>
@@ -62,7 +58,16 @@
       <artifactId>vertx-codetrans</artifactId>
       <scope>provided</scope>
     </dependency>
-
+    <dependency>
+      <groupId>io.vertx</groupId>
+      <artifactId>vertx-lang-groovy</artifactId>
+      <optional>true</optional>
+    </dependency>
+    <dependency>
+      <groupId>io.vertx</groupId>
+      <artifactId>vertx-lang-ruby</artifactId>
+      <optional>true</optional>
+    </dependency>
     <dependency>
       <groupId>io.vertx</groupId>
       <artifactId>vertx-lang-js</artifactId>
@@ -74,20 +79,35 @@
       <artifactId>quartz</artifactId>
       <version>2.2.1</version>
     </dependency>
-
+    <!--
     <dependency>
       <groupId>com.google.inject</groupId>
       <artifactId>guice</artifactId>
       <version>4.0</version>
     </dependency>
 
+
     <dependency>
       <groupId>net.joelinn</groupId>
       <artifactId>quartz-redis-jobstore</artifactId>
       <version>0.1.4</version>
       <optional>true</optional>
+      <exclusions>
+        <exclusion>
+          <groupId>com.fasterxml.jackson.core</groupId>
+          <artifactId>jackson-core</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>com.fasterxml.jackson.core</groupId>
+          <artifactId>jackson-annotations</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>com.fasterxml.jackson.core</groupId>
+          <artifactId>jackson-databind</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
-
+    -->
     <!-- test dependencies -->
 
     <!-- we use JUnit -->

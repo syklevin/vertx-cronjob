@@ -4,7 +4,7 @@ import io.vertx.core.DeploymentOptions;
 import io.vertx.core.Handler;
 import io.vertx.core.json.JsonObject;
 import io.vertx.core.logging.Logger;
-import io.vertx.core.logging.impl.LoggerFactory;
+import io.vertx.core.logging.LoggerFactory;
 import io.vertx.serviceproxy.ProxyHelper;
 import io.vertx.test.core.VertxTestBase;
 import org.junit.After;
@@ -12,6 +12,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by levin on 5/22/2015.
@@ -23,12 +24,12 @@ public class JobServiceTest extends VertxTestBase {
     private JobRegistrationCenter jobCenter;
 
     @Test
-    public void testAddJob() throws Exception {
+    public void testScheduleJob() throws Exception {
 
         CountDownLatch latch = new CountDownLatch(4);
 
         JsonObject data = new JsonObject().put("test1", "abc").put("test2", "456");
-        jobCenter.schedule("testJob1", "0/15 * * * * ?", data, result -> {
+        jobCenter.schedule("testJob1", "0/5 * * * * ?", data, result -> {
 
             System.out.println("testJob1 job triggered: " + result.toString());
             latch.countDown();
@@ -38,7 +39,7 @@ public class JobServiceTest extends VertxTestBase {
             }
         });
 
-        latch.await();
+        latch.await(30, TimeUnit.SECONDS);
 
     }
 

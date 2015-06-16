@@ -1,15 +1,13 @@
 package com.glt.cronjob.impl;
 
 import com.glt.cronjob.JobService;
-import com.google.inject.Inject;
-import com.google.inject.Injector;
 import io.vertx.core.AsyncResult;
 import io.vertx.core.Future;
 import io.vertx.core.Handler;
 import io.vertx.core.Vertx;
 import io.vertx.core.json.JsonObject;
 import io.vertx.core.logging.Logger;
-import io.vertx.core.logging.impl.LoggerFactory;
+import io.vertx.core.logging.LoggerFactory;
 import org.quartz.*;
 import org.quartz.impl.StdSchedulerFactory;
 
@@ -29,14 +27,16 @@ public class JobServiceImpl implements JobService {
     private AtomicInteger counter = new AtomicInteger();
 
     private Scheduler scheduler;
-    private Vertx vertx;
 
-    @Inject
-    public JobServiceImpl(Injector injector, Vertx vertx) throws Exception {
-        this.vertx = vertx;
-        this.scheduler = StdSchedulerFactory.getDefaultScheduler();
-        this.scheduler.setJobFactory(new GuiceJobFactory(injector));
-        this.scheduler.start();
+    public JobServiceImpl(Vertx vertx) {
+        try{
+            this.scheduler = StdSchedulerFactory.getDefaultScheduler();
+            this.scheduler.setJobFactory(new VertxJobFactory(vertx));
+            this.scheduler.start();
+        }
+        catch (Exception ex){
+            throw new RuntimeException("failed to create job scheduler", ex);
+        }
     }
 
     @Override
@@ -88,7 +88,7 @@ public class JobServiceImpl implements JobService {
             //must put as string for serializable
             jobDataMap.put("data", jobDescriptor.getJsonObject("data", new JsonObject()).toString());
 
-            JobDetail jobDetail = newJob(JobImpl.class)
+            JobDetail jobDetail = newJob(VertxJob.class)
                     .withIdentity(jobKey)
                     .usingJobData(jobDataMap)
                     .build();

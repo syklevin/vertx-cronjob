@@ -91,5 +91,32 @@ var JobService = function(j_val) {
   this._jdel = j_jobService;
 };
 
+/**
+
+ @memberof module:cronjob-js/job_service
+ @param vertx {Vertx} 
+ @return {JobService}
+ */
+JobService.create = function(vertx) {
+  var __args = arguments;
+  if (__args.length === 1 && typeof __args[0] === 'object' && __args[0]._jdel) {
+    return utils.convReturnVertxGen(JJobService["create(io.vertx.core.Vertx)"](vertx._jdel), JobService);
+  } else utils.invalidArgs();
+};
+
+/**
+
+ @memberof module:cronjob-js/job_service
+ @param vertx {Vertx} 
+ @param address {string} 
+ @return {JobService}
+ */
+JobService.createProxy = function(vertx, address) {
+  var __args = arguments;
+  if (__args.length === 2 && typeof __args[0] === 'object' && __args[0]._jdel && typeof __args[1] === 'string') {
+    return utils.convReturnVertxGen(JJobService["createProxy(io.vertx.core.Vertx,java.lang.String)"](vertx._jdel, address), JobService);
+  } else utils.invalidArgs();
+};
+
 // We export the Constructor function
 module.exports = JobService;
